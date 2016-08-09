@@ -16,17 +16,17 @@ ActiveRecord::Schema.define(version: 20160809141139) do
   enable_extension "plpgsql"
 
   create_table "tasks", force: :cascade do |t|
-    t.string   "description"
-    t.integer  "user_id"
-    t.boolean  "completed"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "description",                 null: false
+    t.integer  "user_id",                     null: false
+    t.boolean  "completed",   default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
+    t.string   "name",            null: false
+    t.string   "email",           null: false
+    t.string   "password_digest", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
