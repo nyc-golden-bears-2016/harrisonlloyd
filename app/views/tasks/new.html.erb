@@ -1,5 +1,12 @@
 <h1>New Task</h1>
 
+<% if flash[:notice] %>
+  <% flash[:notice].each do |error| %>
+    <%= error %><br>
+  <% end %>
+<% end %>
+<br>
+
 <%= form_for :task, url: '/tasks' do |f| %>
 
   Description: <%= f.text_field :description %>
@@ -7,4 +14,5 @@
 
 <% end %>
 <br>
+
 <%= link_to 'Back', tasks_path %>

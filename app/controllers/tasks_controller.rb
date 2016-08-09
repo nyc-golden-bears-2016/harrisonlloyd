@@ -20,6 +20,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    @task = Task.find_by(user_id: current_user.id, id: params[:id])
   end
 
   # POST /tasks
@@ -33,6 +34,7 @@ class TasksController < ApplicationController
         format.html { redirect_to "/", notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
       else
+        flash[:notice] = @task.errors.full_messages
         format.html { render :new }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
@@ -47,7 +49,8 @@ class TasksController < ApplicationController
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @task }
       else
-        format.html { render :edit }
+        flash[:notice] = @task.errors.full_messages
+        format.html { redirect_to "/tasks/#{@task.id}/edit" }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
@@ -71,6 +74,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:description)
+      params.require(:task).permit(:description, :completed)
     end
 end
